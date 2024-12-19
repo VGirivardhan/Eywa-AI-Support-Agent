@@ -46,8 +46,8 @@ def render_chat():
             else:
                 st.markdown(
                     f"""
+                    <img src = "https://avatars.githubusercontent.com/u/59315465?s=200&v=4" style="width: 20px;">
                     <div class="chat bot">
-                        <img src = "https://avatars.githubusercontent.com/u/59315465?s=200&v=4" style="width: 20px;">
                         <div class="bubble bot-bubble">{message['content']}</div>
                     </div>
                     """,
