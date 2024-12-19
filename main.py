@@ -12,8 +12,8 @@ with open("style.css") as f:
 # Company Logo
 st.markdown(
     """
-    <div style="text-align: center; margin-bottom: 10px;">
-        <img src="company_logo.png" alt="Company Logo" style="width: 200px;" />
+    <div style="text-align: center; margin-left: 100px">
+        <img src="https://massmutualventures.com/wp-content/uploads/testsigma-header-logo.png" alt="Company Logo" style="width: 500px;" />
     </div>
     """,
     unsafe_allow_html=True,
@@ -47,6 +47,7 @@ def render_chat():
                 st.markdown(
                     f"""
                     <div class="chat bot">
+                        <img src = "https://avatars.githubusercontent.com/u/59315465?s=200&v=4" style="width: 20px;">
                         <div class="bubble bot-bubble">{message['content']}</div>
                     </div>
                     """,

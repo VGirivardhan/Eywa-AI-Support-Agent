@@ -61,14 +61,14 @@
     animation: fadeIn 0.3s ease;
 }
 .chat.user .bubble {
-    background: linear-gradient(to right, #ff6ec4, #7873f5);
-    color: #fff;
+    background: linear-gradient(to right, #11e9ec, #34d399);
+    color: #000000;
     text-align: right;
     border-radius: 15px 15px 0 15px;
 }
 .chat.bot .bubble {
     background: linear-gradient(to right, #34d399, #11e9ec);
-    color: #fff;
+    color: #000000;
     border-radius: 15px 15px 15px 0;
 }
 
