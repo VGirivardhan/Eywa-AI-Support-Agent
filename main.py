@@ -1,5 +1,6 @@
 import streamlit as st
 from chat_handler import get_bot_response
+import time
 
 # Page Configuration
 st.set_page_config(page_title="Eywa - AI Support Agent", layout="centered", initial_sidebar_state="collapsed")
@@ -26,27 +27,32 @@ if "messages" not in st.session_state:
     st.session_state.messages = []
 
 # Chat Display Area
-st.markdown("<div class='chat-container'>", unsafe_allow_html=True)
-for message in st.session_state.messages:
-    if message["role"] == "user":
-        st.markdown(
-            f"""
-            <div class="chat user">
-                <div class="bubble gradient-border">{message['content']}</div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-    else:
-        st.markdown(
-            f"""
-            <div class="chat bot">
-                <div class="bubble bot-bubble">{message['content']}</div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-st.markdown("</div>", unsafe_allow_html=True)
+chat_container = st.empty()  # Placeholder for the chat container
+
+def render_chat():
+    """Function to render chat messages dynamically."""
+    with chat_container.container():
+        st.markdown("<div class='chat-container'>", unsafe_allow_html=True)
+        for message in st.session_state.messages:
+            if message["role"] == "user":
+                st.markdown(
+                    f"""
+                    <div class="chat user">
+                        <div class="bubble gradient-border">{message['content']}</div>
+                    </div>
+                    """,
+                    unsafe_allow_html=True,
+                )
+            else:
+                st.markdown(
+                    f"""
+                    <div class="chat bot">
+                        <div class="bubble bot-bubble">{message['content']}</div>
+                    </div>
+                    """,
+                    unsafe_allow_html=True,
+                )
+        st.markdown("</div>", unsafe_allow_html=True)
 
 # Input Box at Bottom
 with st.form("user_input_form", clear_on_submit=True):
@@ -55,15 +61,32 @@ with st.form("user_input_form", clear_on_submit=True):
 
 # Handling user input and bot response
 if submit and user_input:
-    # Add user's message to the chat
+    # Add user's message to the session state
     st.session_state.messages.append({"role": "user", "content": user_input})
+    render_chat()  # Render chat with the user's message immediately
 
-    # Get the bot's response
+    # Placeholder for bot's response
+    bot_response_placeholder = st.empty()
+
+    # Generate the bot's response line by line
     with st.spinner("Eywa is typing..."):
-        bot_reply = get_bot_response(user_input)
-    
-    # Add bot's response to the chat
+        bot_reply = get_bot_response(user_input)  # Get the full bot response
+        
+        # Simulate line-by-line generation
+        generated_response = ""
+        for word in bot_reply.split():
+            generated_response += word + " "
+            bot_response_placeholder.markdown(
+                f"""
+                <div class="chat bot">
+                    <div class="bubble bot-bubble">{generated_response.strip()}</div>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+            time.sleep(0.1)  # Delay for simulating text generation
+
+    # Finalize the bot's response
+    bot_response_placeholder.empty()  # Clear placeholder
     st.session_state.messages.append({"role": "bot", "content": bot_reply})
-    
-    # Re-render the app to show updated chat messages
-    st.rerun()
+    render_chat()  # Re-render the chat with the final response
